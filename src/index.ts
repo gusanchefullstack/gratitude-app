@@ -1,13 +1,16 @@
 import express from "express";
+import config from "#config/config.js";
+import gratitudeRouter from "#routes/gratitudeRoutes.js";
+import { errorHandler } from "#middleware/errorHandler.js";
 
 const app = express()
-const port = process.env.PORT ?? "9001";
+const port = config.port
 
-app.get("/", (req, res) => {
-    res.send("Hello World of Typescript and React.js!")
-    console.log("Response sent")
-});
+app.use(express.json())
+app.use("/api/gratitude", gratitudeRouter);
 
-app.listen(port, () => {
+app.use(errorHandler)
+
+app.listen(3000, () => {
     console.log(`Example app listening on port ${port}`);
 })
